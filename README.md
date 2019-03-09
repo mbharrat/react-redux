@@ -30,7 +30,7 @@ _BABEL_
 _What is it?_
 It provides backwards compatibility
 
-****Structure****
+\***\*Structure\*\***
 /src = source code
 /public = stores static files
 /node_modules = project dependencies
@@ -71,3 +71,75 @@ style={{ backgroundColor: 'blue', color: 'white' }}
 ```
 
 NOTE: use camel case for the actual style
+
+## Section 3
+
+---
+
+Use semantic-ui for many styling and the npm package called faker.
+
+Example of a functional component that takes in props
+
+```js
+import React from "react";
+
+const CommentDetail = props => {
+    return (
+        <div className="comment">
+            <a href="/" className="avatar">
+                <img alt="avatar" src={props.avatar} />
+            </a>
+            <div className="content">
+                <a href="/" className="author">
+                    {props.author}
+                </a>
+                <div className="metadata">
+                    <span className="date">{props.timeAgo}</span>
+                </div>
+                <div className="text">{props.text}</div>
+                <div className="actions">
+                    <a className="reply">Reply</a>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default CommentDetail;
+```
+
+This is how you use the CommentDetail component
+
+```js
+<CommentDetails avatar={faker.image.avatar() author="Mike" timeAgo="Yesterday" text="Example text"}/>
+```
+
+Here's an example of a component using props.children
+
+```js
+import React from "react";
+
+const ApprovalCard = props => {
+    return (
+        <div className="ui card">
+            <div className="content">{props.children}</div>
+            <div className="extra content">
+                <div className="ui two buttons">
+                    <div className="ui basic green button">Approve</div>
+                    <div className="ui basic red button">Reject</div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ApprovalCard;
+```
+
+Here's how you use this component
+
+```js
+<ApprovalCard>
+    <span>This is the child</span>
+</ApprovalCard>
+```

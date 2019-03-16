@@ -143,3 +143,42 @@ Here's how you use this component
     <span>This is the child</span>
 </ApprovalCard>
 ```
+
+## Section 4
+
+---
+
+What are class based components?
+
+Functional components are good for simple content while **Class** components are good for everything else.
+
+Benefits of class componenets
+
+-   easier code organization
+-   can use 'state'
+    -   easier to handle user input
+-   understands lifecycle events
+    -   easier to do things when the app first starts
+
+How does a class component look?
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+
+class App extends React.Component {
+    render() {
+        window.navigator.geolocation.getCurrentPosition(
+            //success callback
+            position => console.log(position),
+            //failure callback
+            err => console.log(err)
+        );
+        return <div>Latitude: </div>;
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"));
+```
+
+\*\*note the extends keyword and the fact that everything is in a render method now

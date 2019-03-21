@@ -182,3 +182,72 @@ ReactDOM.render(<App />, document.querySelector("#root"));
 ```
 
 \*\*note the extends keyword and the fact that everything is in a render method now
+
+**Rules of Class Components**
+
+-   Must be a JS class
+-   Must extend (subclass) React.Component
+-   Must define a 'render' method that returns some amount of JSX
+
+**Rules of State**
+
+-   Only usable with class components
+-   'State' is a JS object that contains data relevant to component
+-   Updating state on comp. causes component to almost instantly rerender
+-   state must be initialized when a component is created
+-   state can only be updated by function `setState`
+
+**App Lifecycle Walkthrough**
+
+1. JS file loaded by browser
+2. Instance of App comp is created
+3. App comp. `constructor` function gets called
+4. State object is created and assigned to `this.state` property
+5. We call geolocation service
+6. React called components render method
+7. App returns JSX and gets rendered to page as HTML
+8. Time passes...
+9. We get result of geolocation
+10. We update our state object with call to `this.setState`
+11. React sees that we updated the state of a component
+12. React calls our `render` method a second time
+13. Render method returns some (updated) JSX
+14. React takes that JSX and updates content on the screen
+
+Here's that App component with a graceful handling of errors! Ternary operators for the win:
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { lat: "Loading", errorMessage: "" };
+
+        window.navigator.geolocation.getCurrentPosition(
+            //success callback
+            position => {
+                this.setState({ lat: position.coords.latitude });
+            },
+            //failure callback
+            err =>
+                this.setState({
+                    errorMessage: err.message
+                })
+        );
+    }
+
+    // React says we have to define render!!
+    render() {
+        const msg =
+            this.state.errorMessage === ""
+                ? `Latitude: ${this.state.lat}`
+                : `Error: ${this.state.errorMessage}`;
+        return <div>{msg}</div>;
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"));
+```
